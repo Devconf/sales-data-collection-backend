@@ -7,7 +7,7 @@ plugins {
 // *plain.jar에 대한 설명을 참고
 // https://dev-j.tistory.com/22
 jar {
-    enabled=false
+    enabled = false
 }
 
 group = 'com.bootcampbackend'
