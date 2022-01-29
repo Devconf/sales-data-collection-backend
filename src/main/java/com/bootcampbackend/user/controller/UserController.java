@@ -1,33 +1,27 @@
 package com.bootcampbackend.user.controller;
 
-import com.bootcampbackend.user.application.UserCommandExecutor;
-import com.bootcampbackend.user.application.UserQueryProcessor;
-import com.bootcampbackend.user.application.dto.request.LogInUserDTO;
-import com.bootcampbackend.user.application.dto.request.SignUpUserDTO;
+import com.bootcampbackend.user.application.UserService;
+import com.bootcampbackend.user.application.dto.request.UserDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
 @Controller
+@RequestMapping(value = "/users")
 @RequiredArgsConstructor
 public class UserController {
 
-  private final UserCommandExecutor userCommandExecutor;
-  private final UserQueryProcessor userQueryProcessor;
+  private final UserService userService;
 
   @PostMapping(value = "/signup")
-  public ResponseEntity createUser(@Valid @RequestBody SignUpUserDTO dto) {
-    userCommandExecutor.createUser(dto);
+  public ResponseEntity createUser(@Valid @RequestBody UserDTO dto) {
+    userService.createUser(dto);
     return ResponseEntity.status(HttpStatus.OK).build();
-  }
-
-  @PostMapping(value = "/login")
-  public ResponseEntity loginUser(@Valid @RequestBody LogInUserDTO dto) {
-    return ResponseEntity.status(HttpStatus.OK).body(userQueryProcessor.checkAuthorisedUser(dto));
   }
 }
