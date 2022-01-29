@@ -1,5 +1,6 @@
 package com.bootcampbackend.user.application.dto.request;
 
+import com.bootcampbackend.user.domain.RoleType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import javax.validation.constraints.Pattern;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class SignUpUserDTO {
   @NotEmpty(message = "회사명은 비어있을 수 없습니다.")
   private String companyName;
 
@@ -24,7 +25,5 @@ public class UserDTO {
   @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,20}$")
   private String password;
 
-  @NotEmpty
-  @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])(?=\\S+$).{8,20}$")
-  private String passwordValid;
+  private RoleType role;
 }
