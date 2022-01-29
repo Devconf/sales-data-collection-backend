@@ -1,12 +1,15 @@
 package com.bootcampbackend.user.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
+import java.util.Collection;
+
+@Getter
 @Entity
-public class User {
+public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -19,16 +22,60 @@ public class User {
 
   private String password;
 
-  private String passwordValid;
+  @Enumerated(EnumType.STRING)
+  private RoleType role;
+
+  private String salt;
 
   protected User() {}
 
   public User(
-      String companyName, String businessNum, String email, String password, String passwordValid) {
+      String companyName,
+      String businessNum,
+      String email,
+      String password,
+      RoleType role,
+      String salt) {
     this.companyName = companyName;
     this.businessNum = businessNum;
     this.email = email;
     this.password = password;
-    this.passwordValid = passwordValid;
+    this.role = role;
+    this.salt = salt;
+  }
+
+  @Override
+  public String getUsername() {
+    return this.email;
+  }
+
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return null;
+  }
+
+  @Override
+  public String getPassword() {
+    return this.password;
+  }
+
+  @Override
+  public boolean isAccountNonExpired() {
+    return false;
+  }
+
+  @Override
+  public boolean isAccountNonLocked() {
+    return false;
+  }
+
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return false;
+  }
+
+  @Override
+  public boolean isEnabled() {
+    return false;
   }
 }
