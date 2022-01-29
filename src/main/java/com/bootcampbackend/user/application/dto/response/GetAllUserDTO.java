@@ -5,17 +5,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
+import java.util.List;
+
 @Setter
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
-public class GetAuthorisedUserDTO {
-
-  private String companyName;
-
-  private String businessNum;
-
-  private String email;
-
-  private String token;
+@NoArgsConstructor
+public class GetAllUserDTO {
+  private List<GetUserDTO> userList;
 }
