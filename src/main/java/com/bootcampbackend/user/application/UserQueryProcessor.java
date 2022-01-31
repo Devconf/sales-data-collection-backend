@@ -9,6 +9,7 @@ import com.bootcampbackend.user.application.dto.response.GetUserDTO;
 import com.bootcampbackend.user.domain.User;
 import com.bootcampbackend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,12 @@ public class UserQueryProcessor {
 
   public List<GetUserDTO> getAllUser() {
     return userRepository.findAll().stream()
+        .map(userMapper::toUserDto)
+        .collect(Collectors.toList());
+  }
+
+  public List<GetUserDTO> getUserWidthPageable(Pageable pageable) {
+    return userRepository.findAll(pageable).stream()
         .map(userMapper::toUserDto)
         .collect(Collectors.toList());
   }
