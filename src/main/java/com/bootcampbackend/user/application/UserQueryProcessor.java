@@ -30,7 +30,7 @@ public class UserQueryProcessor {
         .collect(Collectors.toList());
   }
 
-  public List<GetUserDTO> getUserWidthPageable(Pageable pageable) {
+  public List<GetUserDTO> getUserListWidthPageable(Pageable pageable) {
     return userRepository.findAll(pageable).stream()
         .map(userMapper::toUserDto)
         .collect(Collectors.toList());
