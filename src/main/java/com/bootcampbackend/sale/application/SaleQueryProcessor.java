@@ -19,6 +19,6 @@ public class SaleQueryProcessor {
 
     Pageable pageable = pageRequest.getPageable();
 
-    return saleMapper.toUserDtoList(userQueryProcessor.getUserWidthPageable(pageable));
+    return saleMapper.toUserDtoList(userQueryProcessor.getUserListWidthPageable(pageable));
   }
 }

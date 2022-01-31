@@ -12,6 +12,9 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetUserDTO {
+  @NotEmpty(message = "Id는 비어있을 수 없습니댜.")
+  private long id;
+
   @NotEmpty(message = "회사명은 비어있을 수 없습니다.")
   private String companyName;
 
