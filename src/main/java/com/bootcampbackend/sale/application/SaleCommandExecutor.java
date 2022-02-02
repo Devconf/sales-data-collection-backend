@@ -1,5 +1,6 @@
 package com.bootcampbackend.sale.application;
 
+import com.bootcampbackend.sale.infra.EmailSender;
 import com.bootcampbackend.user.domain.User;
 import com.bootcampbackend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SaleCommandExecutor {
 
   private final UserRepository userRepository;
+  private final EmailSender emailSender;
 
   @Transactional
   public void sendMail(long id) {
@@ -20,8 +22,9 @@ public class SaleCommandExecutor {
         userRepository
             .findUserById(id)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자 입니다."));
+
+    emailSender.sendEmail(findUser.getEmail());
     log.info("성공");
-    // todo findUser.sendMail() 메일 전송 로직을 user에 추가한다.
   }
 
   @Transactional
@@ -30,7 +33,7 @@ public class SaleCommandExecutor {
         .findAll()
         .forEach(
             user -> {
-              // todo user.sendMail()
+              emailSender.sendEmail(user.getEmail());
               log.info("성공");
             });
   }
