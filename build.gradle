@@ -32,6 +32,13 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'com.google.code.gson:gson:2.8.6'
 
+    compileOnly group: 'org.apache.poi', name: 'poi', version: '3.11'
+    compileOnly group: 'org.apache.poi', name: 'poi-ooxml', version: '3.11'
+
+    compileOnly group: 'commons-io', name: 'commons-io', version: '2.4'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+
     implementation 'org.mapstruct:mapstruct:1.4.2.Final'
     implementation 'org.projectlombok:lombok'
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
