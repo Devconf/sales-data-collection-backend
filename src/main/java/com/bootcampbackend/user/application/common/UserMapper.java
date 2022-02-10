@@ -20,5 +20,5 @@ public interface UserMapper {
   GetUserDTO toUserDto(User user);
 
   GetAuthorizedUserDTO toAuthUserDto(
-      String companyName, String businessNum, String email, String token);
+      String companyName, String businessNum, String email, RoleType role, String token);
 }
