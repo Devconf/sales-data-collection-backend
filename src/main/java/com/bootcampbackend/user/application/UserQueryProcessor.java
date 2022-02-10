@@ -50,7 +50,7 @@ public class UserQueryProcessor {
     if (loginPassword.equals(user.getPassword())) {
       String token = jwtTokenProvider.createToken(user.getUsername(), user.getRole());
       return userMapper.toAuthUserDto(
-          user.getCompanyName(), user.getBusinessNum(), user.getEmail(), token);
+          user.getCompanyName(), user.getBusinessNum(), user.getEmail(), user.getRole(), token);
     }
     throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
   }

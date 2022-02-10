@@ -38,10 +38,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authorizeRequests() // 다음 리퀘스트에 대한 사용권한 체크
         .antMatchers("/login", "/signup", "/h2-console/**")
         .permitAll() // 가입 및 인증 주소는 누구나 접근가능
-        .antMatchers("/sales/**")
+        .antMatchers("/sales/upload")
         // hasRole에서 ROLE prefix를 붙여주기때문에 jwtTokenProvider에서 new
         // SimpleGrantedAuthority("ROLE_USER")로 권한을 넣어줘야한다.
-        .hasRole("USER") // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
+        .hasAnyRole("USER", "ADMIN") // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
+        .antMatchers("/sales/**")
+        .hasRole("ADMIN")
         .and()
         .addFilterBefore(
             new JwtAuthenticationFilter(jwtTokenProvider),
