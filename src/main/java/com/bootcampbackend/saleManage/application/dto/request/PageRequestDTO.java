@@ -1,4 +1,4 @@
-package com.bootcampbackend.sale.application.dto.request;
+package com.bootcampbackend.saleManage.application.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

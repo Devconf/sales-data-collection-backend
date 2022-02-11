@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtTokenProvider { // Jwt Token을 생성, 인증, 권한 부여, 유효성 검사, PK 추출 등의 다양한 기능을 제공하는 클래스
 
-  private final long TOKEN_VALID_MILLISECOND = 1000L * 60 * 3; // 3분 나중에 바꿀예정
+  private final long TOKEN_VALID_MILLISECOND = 1000L * 60 * 60; // 60분 나중에 바꿀예정
 
   @Value("spring.jwt.secret")
   private String secretKey;
