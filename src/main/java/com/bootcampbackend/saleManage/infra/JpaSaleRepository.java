@@ -1,7 +1,7 @@
-package com.bootcampbackend.sale.infra;
+package com.bootcampbackend.saleManage.infra;
 
-import com.bootcampbackend.sale.domain.Sale;
-import com.bootcampbackend.sale.domain.SaleRepository;
+import com.bootcampbackend.saleManage.domain.Sale;
+import com.bootcampbackend.saleManage.domain.SaleRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

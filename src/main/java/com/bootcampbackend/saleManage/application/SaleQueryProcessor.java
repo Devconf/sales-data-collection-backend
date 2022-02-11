@@ -1,8 +1,8 @@
-package com.bootcampbackend.sale.application;
+package com.bootcampbackend.saleManage.application;
 
-import com.bootcampbackend.sale.application.common.SaleMapper;
-import com.bootcampbackend.sale.application.dto.request.PageRequestDTO;
-import com.bootcampbackend.sale.application.dto.response.GetAllUserDTO;
+import com.bootcampbackend.saleManage.application.common.SaleMangeMapper;
+import com.bootcampbackend.saleManage.application.dto.request.PageRequestDTO;
+import com.bootcampbackend.saleManage.application.dto.response.GetAllUserDTO;
 import com.bootcampbackend.user.application.UserQueryProcessor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 public class SaleQueryProcessor {
 
   private final UserQueryProcessor userQueryProcessor;
-  private final SaleMapper saleMapper;
+  private final SaleMangeMapper saleMangeMapper;
 
   public GetAllUserDTO getUserList(PageRequestDTO pageRequest) {
 
     Pageable pageable = pageRequest.getPageable();
 
-    return saleMapper.toUserDtoList(userQueryProcessor.getUserListWidthPageable(pageable));
+    return saleMangeMapper.toUserDtoList(userQueryProcessor.getUserListWidthPageable(pageable));
   }
 }

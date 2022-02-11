@@ -1,4 +1,4 @@
-package com.bootcampbackend.sale.application.dto.response;
+package com.bootcampbackend.saleManage.application.dto.response;
 
 import com.bootcampbackend.user.application.dto.response.GetUserDTO;
 import lombok.AllArgsConstructor;

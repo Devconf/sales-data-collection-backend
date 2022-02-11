@@ -1,4 +1,4 @@
-package com.bootcampbackend.sale.infra;
+package com.bootcampbackend.saleManage.infra;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
