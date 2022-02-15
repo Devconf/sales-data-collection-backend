@@ -17,6 +17,8 @@ public class Sale {
 
   private String businessNum;
 
+  private String email;
+
   private Integer totalSales;
 
   private Integer operatingProfit;
@@ -31,15 +33,19 @@ public class Sale {
   @JoinColumn(name = "saleManageId")
   private SaleManage saleManage;
 
+  protected Sale() {}
+
   public Sale(
       String companyName,
       String businessNum,
+      String email,
       Integer totalSales,
       Integer operatingProfit,
       Integer netIncome,
       String date) {
     this.companyName = companyName;
     this.businessNum = businessNum;
+    this.email = email;
     this.totalSales = totalSales;
     this.netIncome = netIncome;
     this.operatingProfit = operatingProfit;

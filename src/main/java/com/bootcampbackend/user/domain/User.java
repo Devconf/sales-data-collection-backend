@@ -78,4 +78,13 @@ public class User implements UserDetails {
   public boolean isEnabled() {
     return false;
   }
+
+  @Override
+  public boolean equals(Object another) {
+    if (another == null) return false;
+    if (!(another instanceof User)) return false;
+    if (this == another) return true;
+
+    return this.id == ((User) another).id;
+  }
 }

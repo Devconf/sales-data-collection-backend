@@ -57,7 +57,7 @@ public class ExcelUtilsImpl implements ExcelUtils {
   private boolean validateWorkbook(Workbook workbook) {
     Sheet sheet = workbook.getSheetAt(0);
     Row header = sheet.getRow(0);
-    if (header.getLastCellNum() != 6) {
+    if (header.getLastCellNum() != 7) {
       return false;
     }
 
@@ -69,16 +69,19 @@ public class ExcelUtilsImpl implements ExcelUtils {
     if (!header.getCell(1).getStringCellValue().equals("사업자번호")) {
       return false;
     }
-    if (!header.getCell(2).getStringCellValue().equals("매출액")) {
+    if (!header.getCell(2).getStringCellValue().equals("이메일")) {
       return false;
     }
-    if (!header.getCell(3).getStringCellValue().equals("영업이익")) {
+    if (!header.getCell(3).getStringCellValue().equals("매출액")) {
       return false;
     }
-    if (!header.getCell(4).getStringCellValue().equals("당기순이익")) {
+    if (!header.getCell(4).getStringCellValue().equals("영업이익")) {
       return false;
     }
-    if (!header.getCell(5).getStringCellValue().equals("기준일자(년월)")) {
+    if (!header.getCell(5).getStringCellValue().equals("당기순이익")) {
+      return false;
+    }
+    if (!header.getCell(6).getStringCellValue().equals("기준일자(년월)")) {
       return false;
     }
     return true;

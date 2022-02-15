@@ -42,6 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // hasRole에서 ROLE prefix를 붙여주기때문에 jwtTokenProvider에서 new
         // SimpleGrantedAuthority("ROLE_USER")로 권한을 넣어줘야한다.
         .hasAnyRole("USER", "ADMIN") // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
+        .antMatchers("/sales/download/**")
+        .hasAnyRole("USER", "ADMIN")
         .antMatchers("/sales/**")
         .hasRole("ADMIN")
         .and()
