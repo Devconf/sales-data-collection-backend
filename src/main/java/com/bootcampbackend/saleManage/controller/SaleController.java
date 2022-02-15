@@ -2,6 +2,7 @@ package com.bootcampbackend.saleManage.controller;
 
 import com.bootcampbackend.saleManage.application.SaleCommandExecutor;
 import com.bootcampbackend.saleManage.application.SaleQueryProcessor;
+import com.bootcampbackend.saleManage.application.dto.request.DownloadRequestDTO;
 import com.bootcampbackend.saleManage.application.dto.request.PageRequestDTO;
 import com.bootcampbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
@@ -10,11 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 
 @Log4j2
 @Controller
@@ -47,5 +47,19 @@ public class SaleController {
   public ResponseEntity uploadFile(MultipartFile[] files, @AuthenticationPrincipal User user) {
     saleCommandExecutor.fileUpload(files, user);
     return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @PostMapping(value = "/download")
+  public ResponseEntity getSaleListWithUser(
+      @Valid @RequestBody DownloadRequestDTO dto, @AuthenticationPrincipal User user) {
+    ;
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(saleQueryProcessor.getSalesWithUserRole(dto, user));
+  }
+
+  @PostMapping(value = "/download/all")
+  public ResponseEntity getAllSaleList(
+      @Valid @RequestBody DownloadRequestDTO dto, @AuthenticationPrincipal User user) {
+    return ResponseEntity.status(HttpStatus.OK).body(saleQueryProcessor.getAllSales(dto, user));
   }
 }

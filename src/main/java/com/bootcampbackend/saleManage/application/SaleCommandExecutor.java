@@ -70,10 +70,11 @@ public class SaleCommandExecutor {
               saleMangeMapper.toSale(
                   sheet.getRow(i).getCell(0).getStringCellValue(),
                   sheet.getRow(i).getCell(1).getStringCellValue(),
-                  (int) sheet.getRow(i).getCell(2).getNumericCellValue(),
+                  sheet.getRow(i).getCell(2).getStringCellValue(),
                   (int) sheet.getRow(i).getCell(3).getNumericCellValue(),
                   (int) sheet.getRow(i).getCell(4).getNumericCellValue(),
-                  sheet.getRow(i).getCell(5).getDateCellValue().toString());
+                  (int) sheet.getRow(i).getCell(5).getNumericCellValue(),
+                  sheet.getRow(i).getCell(6).getDateCellValue().toString());
 
           saleManage.addSale(sale);
         }
