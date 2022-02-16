@@ -36,15 +36,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // JWT인증사용하므로 세션 사용  함
         .and()
         .authorizeRequests() // 다음 리퀘스트에 대한 사용권한 체크
-        .antMatchers("/login", "/signup", "/h2-console/**")
+        .antMatchers("/login", "/signup", "/h2-console/**", "/saleManager/sale/**")
         .permitAll() // 가입 및 인증 주소는 누구나 접근가능
-        .antMatchers("/sales/upload")
-        // hasRole에서 ROLE prefix를 붙여주기때문에 jwtTokenProvider에서 new
-        // SimpleGrantedAuthority("ROLE_USER")로 권한을 넣어줘야한다.
+        .antMatchers("/saleManager/upload", "/saleManager/download/**", "/saleManager/email/**")
+        // hasRole에서 ROLE prefix를 붙여주기때문에 jwtTokenProvider에서
+        // new SimpleGrantedAuthority("ROLE_USER")로 권한을 넣어줘야한다.
         .hasAnyRole("USER", "ADMIN") // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
-        .antMatchers("/sales/download/**")
-        .hasAnyRole("USER", "ADMIN")
-        .antMatchers("/sales/**")
+        .antMatchers("/saleManager/user/**", "/saleManager/email/**")
         .hasRole("ADMIN")
         .and()
         .addFilterBefore(
@@ -67,6 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   public void configure(WebSecurity web) throws Exception {
-    web.ignoring().antMatchers("/login", "/signup", "/h2-console/**");
+    web.ignoring().antMatchers("/login", "/signup", "/h2-console/**", "/saleManager/sale/**");
   }
 }

@@ -10,6 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetSaleDTO {
+  private Long id;
+
   private String companyName;
 
   private String businessNum;

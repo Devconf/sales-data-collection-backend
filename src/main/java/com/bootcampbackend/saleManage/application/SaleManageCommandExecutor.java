@@ -5,6 +5,7 @@ import com.bootcampbackend.saleManage.application.common.SaleMangeMapper;
 import com.bootcampbackend.saleManage.domain.Sale;
 import com.bootcampbackend.saleManage.domain.SaleManage;
 import com.bootcampbackend.saleManage.domain.SaleManageRepository;
+import com.bootcampbackend.saleManage.domain.SaleRepository;
 import com.bootcampbackend.saleManage.infra.EmailSender;
 import com.bootcampbackend.user.domain.User;
 import com.bootcampbackend.user.domain.UserRepository;
@@ -21,9 +22,10 @@ import java.util.List;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class SaleCommandExecutor {
+public class SaleManageCommandExecutor {
 
   private final UserRepository userRepository;
+  private final SaleRepository saleRepository;
   private final SaleManageRepository saleManageRepository;
   private final EmailSender emailSender;
   private final ExcelUtils excelUtils;
@@ -49,6 +51,17 @@ public class SaleCommandExecutor {
               emailSender.sendEmail(user.getEmail());
               log.info("성공");
             });
+  }
+
+  @Transactional
+  public void sendMailWithAccessToken(String accessToken) {
+    Sale findSale =
+        saleRepository
+            .findSaleByAccessToken(accessToken)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회사 입니다."));
+
+    // todo 초대 메일을 발송한다.
+    log.info("성공");
   }
 
   @Transactional
