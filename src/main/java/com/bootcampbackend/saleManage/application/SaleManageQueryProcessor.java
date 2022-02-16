@@ -5,6 +5,7 @@ import com.bootcampbackend.saleManage.application.dto.request.DownloadRequestDTO
 import com.bootcampbackend.saleManage.application.dto.request.PageRequestDTO;
 import com.bootcampbackend.saleManage.application.dto.response.GetAllUserDTO;
 import com.bootcampbackend.saleManage.application.dto.response.GetSaleDTO;
+import com.bootcampbackend.saleManage.domain.Sale;
 import com.bootcampbackend.saleManage.domain.SaleRepository;
 import com.bootcampbackend.user.application.UserQueryProcessor;
 import com.bootcampbackend.user.domain.RoleType;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @Service
 @RequiredArgsConstructor
-public class SaleQueryProcessor {
+public class SaleManageQueryProcessor {
 
   private final UserQueryProcessor userQueryProcessor;
   private final SaleRepository saleRepository;
@@ -54,5 +55,14 @@ public class SaleQueryProcessor {
     return saleRepository.findSaleBetweenDate(dto.getStartAt(), dto.getEndAt()).stream()
         .map(saleMangeMapper::toGetSaleDto)
         .collect(Collectors.toList());
+  }
+
+  public GetSaleDTO getSaleWithAccessToken(String accessToken) {
+    Sale sale =
+        saleRepository
+            .findSaleByAccessToken(accessToken)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회사입니다."));
+
+    return saleMangeMapper.toGetSaleDto(sale);
   }
 }

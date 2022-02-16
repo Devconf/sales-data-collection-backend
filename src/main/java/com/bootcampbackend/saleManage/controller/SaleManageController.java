@@ -1,7 +1,7 @@
 package com.bootcampbackend.saleManage.controller;
 
-import com.bootcampbackend.saleManage.application.SaleCommandExecutor;
-import com.bootcampbackend.saleManage.application.SaleQueryProcessor;
+import com.bootcampbackend.saleManage.application.SaleManageCommandExecutor;
+import com.bootcampbackend.saleManage.application.SaleManageQueryProcessor;
 import com.bootcampbackend.saleManage.application.dto.request.DownloadRequestDTO;
 import com.bootcampbackend.saleManage.application.dto.request.PageRequestDTO;
 import com.bootcampbackend.user.domain.User;
@@ -18,34 +18,40 @@ import javax.validation.Valid;
 
 @Log4j2
 @Controller
-@RequestMapping("/sales")
+@RequestMapping("/saleManage")
 @RequiredArgsConstructor
-public class SaleController {
+public class SaleManageController {
 
-  private final SaleQueryProcessor saleQueryProcessor;
-  private final SaleCommandExecutor saleCommandExecutor;
+  private final SaleManageQueryProcessor saleManageQueryProcessor;
+  private final SaleManageCommandExecutor saleManageCommandExecutor;
 
-  @GetMapping(value = "/list")
+  @GetMapping(value = "/users")
   public ResponseEntity getUserList(PageRequestDTO pageRequestDTO) {
     return ResponseEntity.status(HttpStatus.OK)
-        .body(saleQueryProcessor.getUserList(pageRequestDTO));
+        .body(saleManageQueryProcessor.getUserList(pageRequestDTO));
   }
 
-  @GetMapping(value = "/sendEmail")
+  @GetMapping(value = "/email")
   public ResponseEntity sendMail(@RequestParam("id") long id) {
-    saleCommandExecutor.sendMail(id);
+    saleManageCommandExecutor.sendMail(id);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-  @GetMapping(value = "/sendEmails")
+  @GetMapping(value = "/email/all")
   public ResponseEntity sendMailAll() {
-    saleCommandExecutor.sendMailAll();
+    saleManageCommandExecutor.sendMailAll();
+    return ResponseEntity.status(HttpStatus.OK).build();
+  }
+
+  @GetMapping(value = "/email/invite/{accessToken}")
+  public ResponseEntity sendMailWithAccessToken(@PathVariable("accessToken") String accessToken) {
+    saleManageCommandExecutor.sendMailWithAccessToken(accessToken);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
   @PostMapping(value = "/upload")
   public ResponseEntity uploadFile(MultipartFile[] files, @AuthenticationPrincipal User user) {
-    saleCommandExecutor.fileUpload(files, user);
+    saleManageCommandExecutor.fileUpload(files, user);
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
@@ -54,12 +60,19 @@ public class SaleController {
       @Valid @RequestBody DownloadRequestDTO dto, @AuthenticationPrincipal User user) {
     ;
     return ResponseEntity.status(HttpStatus.OK)
-        .body(saleQueryProcessor.getSalesWithUserRole(dto, user));
+        .body(saleManageQueryProcessor.getSalesWithUserRole(dto, user));
   }
 
   @PostMapping(value = "/download/all")
   public ResponseEntity getAllSaleList(
       @Valid @RequestBody DownloadRequestDTO dto, @AuthenticationPrincipal User user) {
-    return ResponseEntity.status(HttpStatus.OK).body(saleQueryProcessor.getAllSales(dto, user));
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(saleManageQueryProcessor.getAllSales(dto, user));
+  }
+
+  @GetMapping(value = "/sale")
+  public ResponseEntity getSale(@RequestParam("accessToken") String accessToken) {
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(saleManageQueryProcessor.getSaleWithAccessToken(accessToken));
   }
 }
