@@ -7,6 +7,7 @@ import com.bootcampbackend.saleManage.domain.SaleManage;
 import com.bootcampbackend.saleManage.domain.SaleManageRepository;
 import com.bootcampbackend.saleManage.domain.SaleRepository;
 import com.bootcampbackend.saleManage.infra.EmailSender;
+import com.bootcampbackend.saleManage.infra.InviteEmailSender;
 import com.bootcampbackend.user.domain.User;
 import com.bootcampbackend.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class SaleManageCommandExecutor {
   private final SaleRepository saleRepository;
   private final SaleManageRepository saleManageRepository;
   private final EmailSender emailSender;
+  private final InviteEmailSender inviteEmailSender;
   private final ExcelUtils excelUtils;
   private final SaleMangeMapper saleMangeMapper;
 
@@ -60,7 +62,8 @@ public class SaleManageCommandExecutor {
             .findSaleByAccessToken(accessToken)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회사 입니다."));
 
-    // todo 초대 메일을 발송한다.
+    inviteEmailSender.invite(
+        findSale.getEmail(), findSale.getCompanyName(), findSale.getAccessToken());
     log.info("성공");
   }
 
