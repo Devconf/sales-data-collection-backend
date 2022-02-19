@@ -1,16 +1,21 @@
 package com.bootcampbackend.saleManage.application.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.time.LocalDate;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetSaleDTO {
-  private Long id;
+  private Long userId;
+
+  private Long saleManageId;
 
   private String companyName;
 
@@ -24,7 +29,8 @@ public class GetSaleDTO {
 
   private Integer netIncome;
 
-  private String date;
+  @JsonFormat(pattern = "yyyy/MM")
+  private LocalDate date;
 
   private String accessToken;
 }

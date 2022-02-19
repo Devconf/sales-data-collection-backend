@@ -13,10 +13,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class DownloadRequestDTO {
   @NotNull(message = "startAt 필드가 존재하지 않습니다.")
-  @DateTimeFormat(pattern = "yyy-MM-dd")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate startAt;
 
   @NotNull(message = "endAt 필드가 존재하지 않습니다.")
-  @DateTimeFormat(pattern = "yyy-MM-dd")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDate endAt;
 }

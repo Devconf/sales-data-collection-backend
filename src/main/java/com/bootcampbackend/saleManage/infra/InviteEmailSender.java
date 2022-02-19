@@ -41,7 +41,7 @@ public class InviteEmailSender {
         + companyName
         + "의 매출액 수정 또는 삭제 요청 부탁드립니다.\n\n\n"
         + "아래 링크에서 확인 부탁 드립니다.\n"
-        + "http://localhost:3000/sale/"
+        + "http://localhost:3000/saleManage/sale?id="
         + accessToken;
   }
 }
