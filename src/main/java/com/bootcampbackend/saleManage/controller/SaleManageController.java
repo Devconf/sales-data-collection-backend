@@ -4,6 +4,7 @@ import com.bootcampbackend.saleManage.application.SaleManageCommandExecutor;
 import com.bootcampbackend.saleManage.application.SaleManageQueryProcessor;
 import com.bootcampbackend.saleManage.application.dto.request.DownloadRequestDTO;
 import com.bootcampbackend.saleManage.application.dto.request.PageRequestDTO;
+import com.bootcampbackend.saleManage.application.dto.request.UpdateSaleDTO;
 import com.bootcampbackend.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -18,7 +19,7 @@ import javax.validation.Valid;
 
 @Log4j2
 @Controller
-@RequestMapping("/saleManage")
+@RequestMapping("/apis/saleManage")
 @RequiredArgsConstructor
 public class SaleManageController {
 
@@ -74,5 +75,14 @@ public class SaleManageController {
   public ResponseEntity getSale(@RequestParam("accessToken") String accessToken) {
     return ResponseEntity.status(HttpStatus.OK)
         .body(saleManageQueryProcessor.getSaleWithAccessToken(accessToken));
+  }
+
+  @PutMapping(value = "{saleManageId}/sale/{accessToken}")
+  public ResponseEntity updateSale(
+      @PathVariable("saleManageId") Long saleManageId,
+      @PathVariable("accessToken") String accessToken,
+      @RequestBody UpdateSaleDTO dto) {
+    saleManageCommandExecutor.updateSale(saleManageId, accessToken, dto);
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 }

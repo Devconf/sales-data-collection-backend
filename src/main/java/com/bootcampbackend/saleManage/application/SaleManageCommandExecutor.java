@@ -2,6 +2,7 @@ package com.bootcampbackend.saleManage.application;
 
 import com.bootcampbackend.saleManage.application.common.ExcelUtils;
 import com.bootcampbackend.saleManage.application.common.SaleMangeMapper;
+import com.bootcampbackend.saleManage.application.dto.request.UpdateSaleDTO;
 import com.bootcampbackend.saleManage.domain.Sale;
 import com.bootcampbackend.saleManage.domain.SaleManage;
 import com.bootcampbackend.saleManage.domain.SaleManageRepository;
@@ -18,6 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Log4j2
@@ -90,7 +94,13 @@ public class SaleManageCommandExecutor {
                   (int) sheet.getRow(i).getCell(3).getNumericCellValue(),
                   (int) sheet.getRow(i).getCell(4).getNumericCellValue(),
                   (int) sheet.getRow(i).getCell(5).getNumericCellValue(),
-                  sheet.getRow(i).getCell(6).getDateCellValue().toString());
+                  LocalDate.parse(
+                      sheet
+                          .getRow(i)
+                          .getCell(6)
+                          .getLocalDateTimeCellValue()
+                          .format(DateTimeFormatter.ISO_LOCAL_DATE),
+                      DateTimeFormatter.ISO_LOCAL_DATE));
 
           saleManage.addSale(sale);
         }
@@ -100,5 +110,29 @@ public class SaleManageCommandExecutor {
     } catch (Exception e) {
       throw new IllegalArgumentException(e.getMessage());
     }
+  }
+
+  @Transactional
+  public void updateSale(long saleManageId, String accessToken, UpdateSaleDTO dto) {
+    SaleManage saleManage =
+        saleManageRepository
+            .findSaleManageById(saleManageId)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 대표 자회사입니다."));
+
+    YearMonth parsedDate = YearMonth.parse(dto.getDate(), DateTimeFormatter.ofPattern("yyyy/MM"));
+
+    LocalDate date = LocalDate.of(parsedDate.getYear(), parsedDate.getMonth(), 1);
+
+    Sale updatePayload =
+        saleMangeMapper.toSale(
+            dto.getCompanyName(),
+            dto.getBusinessNum(),
+            dto.getEmail(),
+            dto.getTotalSales(),
+            dto.getOperatingProfit(),
+            dto.getNetIncome(),
+            date);
+
+    saleManage.updateSale(accessToken, updatePayload);
   }
 }

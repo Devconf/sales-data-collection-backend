@@ -3,6 +3,7 @@ package com.bootcampbackend.saleManage.domain;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
@@ -25,7 +26,7 @@ public class Sale {
 
   private Integer netIncome;
 
-  private String date;
+  private LocalDate date;
 
   private String accessToken;
 
@@ -42,7 +43,7 @@ public class Sale {
       Integer totalSales,
       Integer operatingProfit,
       Integer netIncome,
-      String date) {
+      LocalDate date) {
     this.companyName = companyName;
     this.businessNum = businessNum;
     this.email = email;
@@ -55,5 +56,23 @@ public class Sale {
 
   public void setSaleManage(SaleManage saleManage) {
     this.saleManage = saleManage;
+  }
+
+  public void updateSaleInfo(
+      String companyName,
+      String businessNum,
+      String email,
+      Integer totalSales,
+      Integer operatingProfit,
+      Integer netIncome,
+      LocalDate date) {
+    this.companyName = companyName;
+    this.businessNum = businessNum;
+    this.email = email;
+    this.totalSales = totalSales;
+    this.operatingProfit = operatingProfit;
+    this.netIncome = netIncome;
+    this.date = date;
+    this.accessToken = UUID.randomUUID().toString();
   }
 }

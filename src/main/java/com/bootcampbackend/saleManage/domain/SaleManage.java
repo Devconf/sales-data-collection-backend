@@ -39,7 +39,24 @@ public class SaleManage {
     this.sales.add(payload);
   }
 
-  public void updateSale(Sale updatePayload) {
-    //
+  public void updateSale(String accessToken, Sale updatePayload) {
+    boolean isUpdate = false;
+    for (Sale sale : this.getSales()) {
+      if (sale.getAccessToken().equals(accessToken)) {
+        sale.updateSaleInfo(
+            updatePayload.getCompanyName(),
+            updatePayload.getBusinessNum(),
+            updatePayload.getEmail(),
+            updatePayload.getTotalSales(),
+            updatePayload.getNetIncome(),
+            updatePayload.getOperatingProfit(),
+            updatePayload.getDate());
+        isUpdate = true;
+        break;
+      }
+    }
+    if (!isUpdate) {
+      throw new IllegalArgumentException("자회사가 존재하지 않습니다.");
+    }
   }
 }
